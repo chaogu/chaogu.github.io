@@ -3,11 +3,17 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://chaogu.github.io/categories/</loc>
+    <loc>http://chaogu.github.io/about/</loc>
+    <lastmod>2019-10-31T09:53:12+08:00</lastmod>
   </url>
   
   <url>
     <loc>http://chaogu.github.io/</loc>
+    <lastmod>2019-10-31T09:53:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://chaogu.github.io/categories/</loc>
   </url>
   
   <url>
