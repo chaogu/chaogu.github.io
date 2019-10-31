@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Heapdump</title>
-    <link>https://chaogu.github.io/</link>
-    <description>Recent content on Heapdump</description>
+    <title>heapdump</title>
+    <link>https://heapdump.cc/</link>
+    <description>Recent content on heapdump</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 31 Oct 2019 09:53:12 +0800</lastBuildDate>
     
-	<atom:link href="https://chaogu.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://heapdump.cc/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About</title>
-      <link>https://chaogu.github.io/about/</link>
+      <link>https://heapdump.cc/about/</link>
       <pubDate>Thu, 31 Oct 2019 09:53:12 +0800</pubDate>
       
-      <guid>https://chaogu.github.io/about/</guid>
+      <guid>https://heapdump.cc/about/</guid>
       <description></description>
     </item>
     

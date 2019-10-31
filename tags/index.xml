@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Heapdump</title>
-    <link>https://chaogu.github.io/tags/</link>
-    <description>Recent content in Tags on Heapdump</description>
+    <title>Tags on heapdump</title>
+    <link>https://heapdump.cc/tags/</link>
+    <description>Recent content in Tags on heapdump</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="https://chaogu.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://heapdump.cc/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
   </channel>
