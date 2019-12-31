@@ -13,10 +13,10 @@
     
     <item>
       <title>MySQL查看表结构</title>
-      <link>https://heapdump.cc/mysql-table-info/</link>
+      <link>https://heapdump.cc/mysql/mysql-table-info/</link>
       <pubDate>Tue, 31 Dec 2019 15:28:12 +0800</pubDate>
       
-      <guid>https://heapdump.cc/mysql-table-info/</guid>
+      <guid>https://heapdump.cc/mysql/mysql-table-info/</guid>
       <description> 查看表结构 SELECT * FROM information_schema.tables WHERE table_schema = &#39;db_name&#39; AND table_name = &#39;table_name&#39;  查看字段 SELECT * FROM information_schema.columns WHERE table_schema = &#39;db_name&#39; AND table_name = &#39;table_name&#39;  </description>
     </item>
     
