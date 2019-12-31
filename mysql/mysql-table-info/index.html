@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>About // heapdump</title>
+    <title>MySQL查看表结构 // heapdump</title>
 
         <meta charset="utf-8">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -9,11 +9,11 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="author" content="">
-        <meta property="og:title" content="About" />
+        <meta property="og:title" content="MySQL查看表结构" />
     <meta property="og:description" content="" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:url" content="https://heapdump.cc/about/" />
+    <meta property="og:url" content="https://heapdump.cc/mysql/mysql-table-info/" />
     
 
     <link href="" rel="alternate" type="application/rss+xml" title="heapdump" />
@@ -51,25 +51,49 @@
     <div class="article-inner">
         
         <header class="article-header">
-            <h1 class="article-title" itemprop="name">About</h1>
+            <h1 class="article-title" itemprop="name">MySQL查看表结构</h1>
         </header>
         
         <div class="article-meta">
-            <a href="/about/" class="article-date">
-                <time datetime='2019-10-31T09:53:12.000&#43;08:00' itemprop="datePublished">2019-10-31</time>
+            <a href="/mysql/mysql-table-info/" class="article-date">
+                <time datetime='2019-12-31T15:28:12.000&#43;08:00' itemprop="datePublished">2019-12-31</time>
             </a>
             
             
             
         </div>
         <div class="article-entry" itemprop="articleBody">
-            <ul>
-<li>Email:chaogu.c(AT)qq.com</li>
-</ul>
+            
+
+<h3 id="查看表结构">查看表结构</h3>
+
+<pre><code>SELECT * FROM information_schema.tables WHERE table_schema = 'db_name' AND table_name = 'table_name'
+</code></pre>
+
+<h3 id="查看字段">查看字段</h3>
+
+<pre><code>SELECT * FROM information_schema.columns WHERE table_schema = 'db_name' AND table_name = 'table_name'
+</code></pre>
 
         </div>
 
         
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#查看表结构">查看表结构</a></li>
+<li><a href="#查看字段">查看字段</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
         
         
 
@@ -80,12 +104,10 @@
     </div>
     <nav id="article-nav">
     
-    <a href="/bit-torrent/" id="article-nav-newer" class="article-nav-link-wrap">
-        <div class="article-nav-title"><span>&lt;</span>&nbsp;
-            Bit Torrent
-        </div>
-    </a>
     
+    <a href="/bit-torrent/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">Bit Torrent&nbsp;<span>&gt;</span></div>
+    </a>
     
 </nav>
 

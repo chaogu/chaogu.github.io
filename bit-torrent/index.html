@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bit Torrent // heapdump</title>
+
+        <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+        <meta property="og:title" content="Bit Torrent" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://heapdump.cc/bit-torrent/" />
+    
+
+    <link href="" rel="alternate" type="application/rss+xml" title="heapdump" />
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <link href="https://heapdump.cc/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="https://heapdump.cc/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://heapdump.cc/css/style.css">
+
+    <meta name="generator" content="Hugo 0.59.0" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="https://heapdump.cc/">heapdump</a>
+            <nav id="main-nav">
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Bit Torrent</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/bit-torrent/" class="article-date">
+                <time datetime='2019-11-04T10:53:34.000&#43;08:00' itemprop="datePublished">2019-11-04</time>
+            </a>
+            
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            
+
+<p>本文翻译自《<a href="https://skerritt.blog/bit-torrent/">How Does BitTorrent Work? a Plain English Guide</a> 》，由于</p>
+
+<h1 id="bittorrent如何工作">BitTorrent如何工作</h1>
+
+<p>BitTorrent是用于传输大文件的最常见协议之一。2013年2月，BitTorrent占全球所有带宽的3.35％，占所有文件共享带宽（6％）的一半以上。
+本文不谈论如何使用BitTorrent上传下载内容，也不讨论哪个客户端是最好的，只是深入探讨它的技术层面的内容。任何没有网络或BitTorrent基础知识都任都可以读懂这篇文章。
+让我们开始吧！</p>
+
+<h1 id="目录">目录</h1>
+
+<p>1、谁创建了BitTorrent？
+2、BitTorrent与客户服务器端下载对比
+3、概述
+4、什么是Torrent描述文件
+5、of BitTorrent的片段选择算法
+6、Sub什么是子件和件选择算法？
+6.1、严格政策
+6.2、抢先
+6.3、随机第一部分
+6.4、残局模式
+7、Using使用针锋相对的资源分配
+8窒息算法
+9乐观
+10、反突
+11、If如果仅上传，该怎么办？
+12、什么是追踪器？
+12.1、公共追踪器
+12.2、私人追踪器
+12.3、多轨洪流
+13、磁链-无轨洪流
+14、分布式哈希表
+15、路由表
+16、Bit攻击BitTorrent</p>
+
+<h2 id="谁创建了bittorrent">谁创建了BitTorrent</h2>
+
+<p>布萊姆·科亨（<a href="https://en.wikipedia.org/wiki/Bram_Cohen">Bram Cohen</a>）在2001年发明了BitTorrent协议,他用Python编写了第一个客户端实现。在2002年夏天，他收集了免费的色情内容，以吸引测试用户。</p>
+
+<h2 id="bittorrent与客户服务器端下载对比">BitTorrent与客户服务器端下载对比</h2>
+
+<p>在传统下载中，服务器上载文件，而客户端下载文件。</p>
+
+<p>对于热门文件，这不是很有效。
+1、500个人同时下载同一文件会使服务器承受巨大的压力,从而限制上行速度，结果客户端无法快速下载文件。
+2、客户端服务器模式要花很多钱，我们支付的服务器的费用会随着文件的受欢迎程度而增加。
+3、它是集中式的，如果系统死了，该文件就不再存在了，也就没有人可以下载它。</p>
+
+<p>BitTorrent旨在解决这些问题。</p>
+
+<p>| 客户服务器模式               |   BitTorrent                  |<br />
+|&mdash;&mdash;&mdash;&mdash;&mdash;-               | &mdash;&mdash;&mdash;&mdash;                  |
+| 集中式                       | 分布式                       |
+| 热门文件会造成服务端产生压力    | 热门文件不会造成任何压力      |
+| 花费大量的钱，花费多少取决于文件有多少人下载    |花费并不会随着文件热门程度增长|</p>
+
+<p>在对等网络中，每个对等点都连接到网络中的每个其他对等点。
+<img src="/images/Peer-to-peer-network.svg" alt="对等网络" />
+半集中式对等网络拥有一个或多个对等网络，其权限比大多数对等网络更高。
+<img src="/images/Peer-to-peer-network-centralised.svg" alt="半集中式对等网络" /></p>
+
+<h2 id="概述">概述</h2>
+
+<p>BitTorrent是一种共享文件的方式，通常用于大型文件。BitTorrent是共享文件（例如服务器）的单个源的替代方法。BitTorrent可以有效地在较低带宽上工作。</p>
+
+<p>BitTorrent客户端的第一个版本没有搜索引擎，也没有对等交换，想要上载文件的用户必须创建一个小的torrent描述符文件，然后将其上传到torrent索引站点。</p>
+
+<p>当用户想要共享文件时，他们会播种文件。该用户称为播种机。他们将torrent描述符文件上传到交易所（我们稍后再讨论）。任何想要下载该文件的人都将下载该种子描述符。
+<img src="/image/ClientServer-1.png" alt="上传描述符文件" /></p>
+
+<p>我们称呼那些下载同行的人。他们的洪流客户端将连接到跟踪器（稍后讨论），并且跟踪器将向他们发送群集中其他种子和对等方的IP地址列表。该群是所有电脑相关的一定洪流。</p>
+
+<p>torrent描述符文件包含我们正在下载的文件上的跟踪器和元数据的列表。
+<img src="/image/ClientServer--2-.png" alt="从跟踪器下载元数据列表" /></p>
+
+<p>对等方将连接到种子并下载文件的一部分。</p>
+
+<p><img src="/image/peer-to-peer-bit-torrent.png" alt="连接到对等方下载文件" /></p>
+
+<p>对等方完成下载后，它们可以充当种子。虽然，可以在下载的同时充当种子（这是很常见的）。</p>
+
+<p>种子将文件共享给同级后，该同级将充当种子。在BitTorrent中，取代了只有一台服务器来上传文件的客户端-服务器模型，多个人可以上传同一文件。</p>
+
+<p>BitTorrent将文件分成称为块的块，每个块都有一定大小。有时是256KB，有时是1MB。当每个同龄人收到一块时，它们就成为其他同龄人的种子。</p>
+
+<p>使用BitTorrent，我们没有一个单一的下载源。我们可以从您的祖国下载一些作品，然后从遥远的国家下载您祖国不拥有的一些作品。</p>
+
+<p>该协议对片段进行哈希处理，以确保没有种子被篡改原始文件。然后将散列存储在跟踪器的种子描述符中。</p>
+
+<p>这就是BitTorrent在高水平上的工作方式。现在我们将详细介绍。我们旨在回答以下问题：</p>
+
+<ul>
+<li>如果对等方仅下载但从未上传，该怎么办？</li>
+<li>我们从谁下载或上传到谁？</li>
+<li>什么是磁链？</li>
+<li>什么是洪流描述符？</li>
+<li>使用什么哈希算法？</li>
+<li>BitTorrent如何选择要下载的部分？
+以及更多。</li>
+</ul>
+
+<h2 id="什么是torrent描述文件">什么是Torrent描述文件</h2>
+
+<p>这是一个字典（或哈希图）文件。</p>
+
+<p>该文件描述为：</p>
+
+<h3 id="宣布">宣布</h3>
+
+<p>跟踪器的URL。还记得我们与跟踪服务器联系以使用同一文件查找其他对等节点时的情况吗？我们通过使用torrent描述符文件中的announce键找到了该跟踪器。</p>
+
+<h3 id="信息">信息</h3>
+
+<p>这映射到一个字典，该字典的键取决于是否共享一个或多个文件。关键是：</p>
+
+<h4 id="文件-信息的子级-是列表">文件（信息的子级，是列表）</h4>
+
+<p>文件仅在共享多个文件时存在。文件是词典列表。每个字典对应一个文件。
+这些词典中的每一个都有2个键。</p>
+
+<h4 id="长度-文件大小-以字节为单位">长度-文件大小，以字节为单位。</h4>
+
+<p>路径 - 对应于子目录名称的字符串列表，最后一个是实际文件名。</p>
+
+<p>长度 - 文件大小（以字节为单位）（仅在共享一个文件时）</p>
+
+<p>名称 - 建议的文件名。或建议的目录名称。</p>
+
+<p>件长-每块的字节数。</p>
+
+<p>片段的长度必须是2的幂且至少为16KiB。</p>
+
+<p>这是</p>
+
+<p>件
+哈希列表。</p>
+
+<p>根据各种数据块计算得出的哈希列表。我们将数据分成几部分。计算这些片段的哈希值，并将其存储在列表中。</p>
+
+<p>BitTorrent使用SHA-1，该SHA-1返回一个160位的哈希。片段将是一个长度为20个字节的倍数的字符串。</p>
+
+<p>如果种子文件包含多个文件，则通过按文件在文件目录中出现的顺序串联文件来形成片段。</p>
+
+<p>洪流中的所有片段均为完整片段长度，最后一个片段可能较短。</p>
+
+<p>现在，我可以猜到您在想什么。</p>
+
+<p>“ SHA-1？这是什么？2000年代初期？”
+并且我同意。BitTorrent正在从SHA-1移至SHA256。</p>
+
+<p>还是很困惑？不用担心！我设计了这个JSON文件，描述了种子文件的外观。注意：我已经连接了一些东西。这使得更容易阅读和理解总体布局。我按照BitTorrent的torrent描述符的规则编造了数字。</p>
+
+<pre><code>{
+    &quot;Announce&quot;: &quot;url of tracker&quot;,
+    &quot;Info&quot;: {
+        &quot;Files&quot;: [
+            {
+                &quot;Length&quot;: 16,
+                &quot;path&quot;: &quot;/folder/to/path&quot;
+            },
+            {
+                &quot;length&quot;: 193,
+                &quot;path&quot;: &quot;/another/folder&quot;
+            }
+        ]
+    },
+    &quot;length&quot;: 192,
+    &quot;name&quot;:&quot; Ubuntu.iso&quot;,
+    &quot;Pieces length&quot;: 262144,
+    &quot;Pieces&quot;: [AAF4C61DDCC5E8A2DABEDE0F3B482CD9AEA9434D, CFEA2496442C091FDDD1BA215D62A69EC34E94D0]
+}
+</code></pre>
+
+        </div>
+
+        
+        
+        <div class="article-toc" >
+            <h3>Contents</h3>
+            <nav id="TableOfContents">
+<ul>
+<li><a href="#bittorrent如何工作">BitTorrent如何工作</a></li>
+<li><a href="#目录">目录</a>
+<ul>
+<li><a href="#谁创建了bittorrent">谁创建了BitTorrent</a></li>
+<li><a href="#bittorrent与客户服务器端下载对比">BitTorrent与客户服务器端下载对比</a></li>
+<li><a href="#概述">概述</a></li>
+<li><a href="#什么是torrent描述文件">什么是Torrent描述文件</a>
+<ul>
+<li><a href="#宣布">宣布</a></li>
+<li><a href="#信息">信息</a>
+<ul>
+<li><a href="#文件-信息的子级-是列表">文件（信息的子级，是列表）</a></li>
+<li><a href="#长度-文件大小-以字节为单位">长度-文件大小，以字节为单位。</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+        </div>
+        
+        
+
+        
+
+
+        
+    </div>
+    <nav id="article-nav">
+    
+    <a href="/mysql/mysql-table-info/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            MySQL查看表结构
+        </div>
+    </a>
+    
+    
+    <a href="/about/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">About&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2019 heapdump
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

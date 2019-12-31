@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mysqls on heapdump</title>
+    <link>https://heapdump.cc/mysql/</link>
+    <description>Recent content in Mysqls on heapdump</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 31 Dec 2019 15:28:12 +0800</lastBuildDate>
+    
+	<atom:link href="https://heapdump.cc/mysql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MySQL查看表结构</title>
+      <link>https://heapdump.cc/mysql/mysql-table-info/</link>
+      <pubDate>Tue, 31 Dec 2019 15:28:12 +0800</pubDate>
+      
+      <guid>https://heapdump.cc/mysql/mysql-table-info/</guid>
+      <description> 查看表结构 SELECT * FROM information_schema.tables WHERE table_schema = &#39;db_name&#39; AND table_name = &#39;table_name&#39;  查看字段 SELECT * FROM information_schema.columns WHERE table_schema = &#39;db_name&#39; AND table_name = &#39;table_name&#39;  </description>
+    </item>
+    
+  </channel>
+</rss>

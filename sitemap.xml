@@ -3,12 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://heapdump.cc/about/</loc>
-    <lastmod>2019-10-31T09:53:12+08:00</lastmod>
+    <loc>https://heapdump.cc/</loc>
+    <lastmod>2019-12-31T15:28:12+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://heapdump.cc/</loc>
+    <loc>https://heapdump.cc/mysql/</loc>
+    <lastmod>2019-12-31T15:28:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://heapdump.cc/mysql/mysql-table-info/</loc>
+    <lastmod>2019-12-31T15:28:12+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://heapdump.cc/bit-torrent/</loc>
+    <lastmod>2019-11-04T10:53:34+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://heapdump.cc/about/</loc>
     <lastmod>2019-10-31T09:53:12+08:00</lastmod>
   </url>
   
