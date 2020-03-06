@@ -17,7 +17,7 @@
       <pubDate>Tue, 31 Dec 2019 15:28:12 +0800</pubDate>
       
       <guid>https://heapdump.cc/mysql/mysql-table-info/</guid>
-      <description> 查看表结构 SELECT * FROM information_schema.tables WHERE table_schema = &#39;db_name&#39; AND table_name = &#39;table_name&#39;  查看字段 SELECT * FROM information_schema.columns WHERE table_schema = &#39;db_name&#39; AND table_name = &#39;table_name&#39;  </description>
+      <description> 查看表结构 SELECT * FROM information_schema.tables WHERE table_schema = &#39;db_name&#39; AND table_name = &#39;table_name&#39;  查看字段 SELECT * FROM information_schema.columns WHERE table_schema = &#39;db_name&#39; AND table_name = &#39;table_name&#39;  查看表的大小和行数 SELECT TABLE_NAME, TABLE_ROWS, DATA_LENGTH / 1024 / 1024 AS DATA_LENGTH, CREATE_TIME, TABLE_COLLATION FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = &#39;db_name&#39; ORDER BY TABLE_ROWS DESC  </description>
     </item>
     
   </channel>
